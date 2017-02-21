@@ -1,0 +1,89 @@
+//Start Ctrl+F5
+//1. ќпределить несколько типов переменных (от 10), ввести с клавиатуры, вывести на экран
+/*
+#include <iostream>
+using namespace std;
+void main()
+{
+	unsigned char Odin_simvol;
+	int Celoe_chislo1;
+	signed int Celoe_chislo2;
+	short Korotkoe_celoe_chislo;
+	long long Dlinnoe_celoe_chislo;
+	unsigned int Poloj_celoe_chislo;
+	unsigned short Poloj_korotkoe_celoe_chislo;
+	unsigned long long Poloj_dlinnoe_celoe_chislo;
+	float Veschest_chislo;
+	double Veschest_chislo_dvoinoi_tochnosti;
+	cout << "Vvedite Odin_simvol: ";
+	cin >> Odin_simvol;
+	cout << "Vvedite Celoe_chislo1: ";
+	cin >> Celoe_chislo1;
+	cout << "Vvedite Celoe_chislo2: ";
+	cin >> Celoe_chislo2;
+	cout << "Vvedite Korotkoe_celoe_chislo: ";
+	cin >> Korotkoe_celoe_chislo;
+	cout << "Vvedite Dlinnoe_celoe_chislo: ";
+	cin >> Dlinnoe_celoe_chislo;
+	cout << "Vvedite Poloj_celoe_chislo: ";
+	cin >> Poloj_celoe_chislo;
+	cout << "Vvedite Poloj_korotkoe_celoe_chislo: ";
+	cin >> Poloj_korotkoe_celoe_chislo;
+	cout << "Vvedite Poloj_dlinnoe_celoe_chislo: ";
+	cin >> Poloj_dlinnoe_celoe_chislo;
+	cout << "Vvedite Veschest_chislo: ";
+	cin >> Veschest_chislo;
+	cout << "Vvedite Veschest_chislo_dvoinoi_tochnosti: ";
+	cin >> Veschest_chislo_dvoinoi_tochnosti;
+	cout << "Vi vveli:\n" << Odin_simvol << "\n" << Celoe_chislo1 << "\n" << Celoe_chislo2 << "\n";
+	cout << Korotkoe_celoe_chislo << "\n" << Dlinnoe_celoe_chislo << "\n" << Poloj_celoe_chislo << "\n";
+	cout << Poloj_korotkoe_celoe_chislo << "\n" << Poloj_dlinnoe_celoe_chislo << "\n";
+	cout << Veschest_chislo << "\n" << Veschest_chislo_dvoinoi_tochnosti << "\n";
+}
+*/
+//2. Ќарисовать на в консольном режиме треугольник, или (и) дом
+/*
+#include <iostream>
+using namespace std;
+void main()
+{
+	cout << "              /\\\n";
+	cout << "             /  \\\n";
+	cout << "            /    \\\n";
+	cout << "           /______\\\n";
+	cout << "           |      |\n";
+	cout << "           |      |\n";
+	cout << "           |______|\n";
+}
+*/
+//3. Ќаписать программу ввода числа от одного до дес€ти (1..10) и при поможи оператора ветвлени€ (if () {} else {}), 
+//дать не менее трех попыток дл€ того чтобы угадать число. Ѕолее сложное условие - давать подсказку, в случае неверного ввода, 
+//о том что задуманное число больше, либо меньше введенного.
+/*
+#include <iostream>
+using namespace std;
+void main()
+{
+	int a, b;
+	cout << "Vvedite chislo ot 1 do 10: ";
+	cin >> a;
+	cout << "Otgadaite chislo: ";
+	cin >> b;
+	if (b == a) { cout << "Pravilno!\n"; }
+	else {
+		if (b < a) { cout << "Ne pravilno!\nZagadannoe chislo bolshe\n\nOtgadaite chislo esche raz: "; }
+		else { cout << "Ne pravilno!\nZagadannoe chislo menshe\n\nOtgadaite chislo esche raz: "; }
+		cin >> b;
+		if (b == a) { cout << "Pravilno!\n"; }
+		else {
+			if (b < a) { cout << "Ne pravilno!\nZagadannoe chislo bolshe\n\nOtgadaite chislo esche raz: "; }
+			else { cout << "Ne pravilno!\nZagadannoe chislo menshe\n\nOtgadaite chislo esche raz: "; }
+			cin >> b;
+			if (b == a) { cout << "Pravilno!\n"; }
+			else {
+				cout << "Ne pravilno!\n";
+			}
+		}
+	}
+}
+*/

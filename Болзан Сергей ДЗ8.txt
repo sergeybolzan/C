@@ -1,0 +1,254 @@
+﻿Задание 1: 
+Написать функцию, которая удаляет из строки символ с заданным номером.
+
+#include "stdafx.h"
+#include <iostream>
+#include <string.h>
+int DELETE(char *STR, int N){
+	char *Cut = STR + N + 1;
+	*(STR + N) = 0;
+	return strcat_s(STR, 49, Cut);
+}
+int _tmain(int argc, _TCHAR* argv[])
+{
+	char *String = new char[50];
+	gets_s(String, 49);
+	printf("Vvedite nomer simvola: ");
+	int n;
+	scanf_s("%d", &n);
+	n--;
+
+	DELETE(String, n);
+	printf("%s\n", String);
+	system("pause");
+	delete[] String;
+	return 0;
+}
+
+Задание 2: 
+Написать функцию, которая удаляет из строки все вхождения в нее заданного символа.
+
+#include "stdafx.h"
+#include <iostream>
+#include <string.h>
+int DELETE(char *STR, char N){
+	while (*STR){
+		while (*STR == N)   for (int i = 0; i < strlen(STR); i++)    *(STR + i) = *(STR + i + 1);
+		STR++;
+	}
+	return 0;
+}
+int _tmain(int argc, _TCHAR* argv[])
+{
+	char *String = new char[50];
+	gets_s(String, 49);
+	printf("Kakoi simvol udalit'?: ");
+	char n = getchar();
+
+	DELETE(String, n);
+	printf("%s\n", String);
+	system("pause");
+	delete[] String;
+	return 0;
+}
+
+Задание 3: 
+Написать функцию, которая вставляет в строку в указанную позицию заданный символ.
+
+#include "stdafx.h"
+#include <iostream>
+#include <string.h>
+int INSERT(char *STR, char *S, int N){
+	char *POS = STR + N;
+	char *X = new char[50 - N];
+	strcpy_s(X, 50 - N - 1, POS);
+	*(STR + N) = 0;
+	strcat_s(STR, 49, S);
+	return strcat_s(STR, 49, X);
+}
+int _tmain(int argc, _TCHAR* argv[])
+{
+	char *String = new char[50];
+	gets_s(String, 49);
+	printf("Kakoi simvol nujno vstavit'?: ");
+	char *s = new char[10];
+	gets_s(s, 9);
+	printf("Vvedite nomer simvola, posle kotorogo nujno vstavit' simvol: ");
+	int n;
+	scanf_s("%d", &n);
+
+	INSERT(String, s, n);
+	printf("%s\n", String);
+	system("pause");
+	delete[] String;
+	return 0;
+}
+
+Задание 4: 
+Написать программу, которая заменяет все символы точки "." в строке, введенной пользователем, на символы восклицательного знака "!".
+
+#include "stdafx.h"
+#include <iostream>
+#include <string.h>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	char *String = new char[50];
+	gets_s(String, 49);
+	for (int i = 0; i < strlen(String); i++)	if (*(String + i) == '.') *(String + i) = '!';
+	printf("%s\n", String);
+	system("pause");
+	delete[] String;
+	return 0;
+}
+
+Задание 5: 
+Пользователь вводит строку символов и искомый символ, посчитать сколько раз он встречается в строке.
+
+#include "stdafx.h"
+#include <iostream>
+#include <string.h>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	char *String = new char[50];
+	gets_s(String, 49);
+	char F = getchar();
+	int n = 0;
+	for (int i = 0; i < strlen(String); i++)	if (*(String + i) == F) n++;
+	printf("%d\n", n);
+	system("pause");
+	delete[] String;
+	return 0;
+}
+
+Задание 6: 
+Пользователь вводит строку. Определить количество букв, количество цифр и количество остальных символов, присутствующих в строке.
+Рекомендации:
+Для проверки, что символ является числом, не обязательно сравнивать его со всеми 10-ю цифрами, достаточно сравнить код символа с диапазоном кодов цифр. Код символа 0 – 48, 1 – 49, 2 – 50 …. 9 – 57.
+
+#include "stdafx.h"
+#include <iostream>
+#include <string.h>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	char *String = new char[50];
+	gets_s(String, 49);
+	int bukv = 0, cifr = 0, ost = 0;
+	for (int i = 0; i < strlen(String); i++) {
+		if ((*(String + i) >= 97) && (*(String + i) <= 122)) bukv++;
+		if ((*(String + i) >= 48) && (*(String + i) <= 57)) cifr++;
+	}
+	ost = strlen(String) - bukv - cifr;
+	printf("%d\t%d\t%d\n", bukv, cifr, ost);
+	system("pause");
+	delete[] String;
+	return 0;
+}
+
+Задание 7: 
+Дана строка символов. Заменить в ней все пробелы на табуляции.
+
+#include "stdafx.h"
+#include <iostream>
+#include <string.h>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	char *String = new char[50];
+	gets_s(String, 49);
+	for (int i = 0; i < strlen(String); i++)	if (*(String + i) == ' ') *(String + i) = '\t';
+	printf("%s\n", String);
+	system("pause");
+	delete[] String;
+	return 0;
+}
+
+Задание 8: 
+Дана строка символов. Определить количество букв, цифр и остальных символов, присутствующих в строке.
+
+#include "stdafx.h"
+#include <iostream>
+#include <string.h>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	char *String = new char[50];
+	gets_s(String, 49);
+	int bukv = 0, cifr = 0, ost = 0;
+	for (int i = 0; i < strlen(String); i++) {
+		if ((*(String + i) >= 97) && (*(String + i) <= 122)) bukv++;
+		if ((*(String + i) >= 48) && (*(String + i) <= 57)) cifr++;
+	}
+	ost = strlen(String) - bukv - cifr;
+	printf("%d\t%d\t%d\n", bukv, cifr, ost);
+	system("pause");
+	delete[] String;
+	return 0;
+}
+
+Задание 9: 
+Подсчитать количество слов во введенном предложении.
+
+#include "stdafx.h"
+#include <iostream>
+#include <string.h>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	char *String = new char[50];
+	gets_s(String, 49);
+	int n = 0;
+	for (int i = 0; i < strlen(String); i++)	if (*(String + i) == ' ') n++;
+	printf("%d\n", n+1);
+	system("pause");
+	delete[] String;
+	return 0;
+}
+
+Задание 10: 
+Дана строка символов. Необходимо проверить является ли эта строка палиндромом.
+
+Вариант 1:
+#include "stdafx.h"
+#include <iostream>
+#include <string.h>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	char *String = new char[50];
+	gets_s(String, 49);
+	for (int i = 0; i < strlen(String); i++) {
+		while (!((*(String + i) >= 97) && (*(String + i) <= 122)) && !((*(String + i) >= 48) && (*(String + i) <= 57)))
+		for (int k = i; k < strlen(String); k++)    
+			*(String + k) = *(String + k + 1);
+	}
+	printf("%s - ubrani lishnie simvoli\n", String);
+	bool Bool = true;
+	for (int i = 0; i < strlen(String)/2; i++)	
+	if (!(*(String + i) == *(String + strlen(String) - i - 1))) Bool = false;
+	if (Bool) printf("Stroka yavlyaetsya palindromom\n");
+	else printf("Stroka ne yavlyaetsya palindromom\n");
+	system("pause");
+	delete[] String;
+	return 0;
+}
+
+Вариант 2:
+#include "stdafx.h"
+#include <iostream>
+#include <string.h>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	char *String = new char[50];
+	gets_s(String, 49);
+	for (int i = 0; i < strlen(String); i++) {
+		while (!((*(String + i) >= 97) && (*(String + i) <= 122)) && !((*(String + i) >= 48) && (*(String + i) <= 57)))
+		for (int k = i; k < strlen(String); k++)    
+			*(String + k) = *(String + k + 1);
+	}
+	printf("%s - ubrani lishnie simvoli\n", String);
+	char *Obr = new char [50];
+	strcpy_s(Obr, 49, String);
+	_strrev(Obr);
+	if (!strcmp(String, Obr)) printf("Stroka yavlyaetsya palindromom\n");
+	else printf("Stroka ne yavlyaetsya palindromom\n");
+	system("pause");
+	delete[] String;
+	delete[] Obr;
+	return 0;
+}

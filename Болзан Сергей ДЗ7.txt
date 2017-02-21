@@ -1,0 +1,303 @@
+﻿Задание 1: 
+Даны два массива: А[M] и B[N] (M и N вводятся с клавиатуры). Необходимо создать третий массив минимально возможного размера, в котором нужно собрать элементы массива A, которые не включаются в массив B, без повторений.
+
+#include "stdafx.h" 
+#include <iostream>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	int M, N;
+	printf("Vvedite M i N: ");
+	scanf_s("%d%d", &M, &N);
+	int *A = new int[M];
+	int *B = new int[N];
+	for (int i = 0; i < M; i++)	A[i] = rand() % 20;
+	for (int i = 0; i < N; i++)	B[i] = rand() % 20;
+	for (int i = 0; i < M; i++) printf("%4d", A[i]);
+	printf("\n");
+	for (int i = 0; i < N; i++) printf("%4d", B[i]);
+	int *C = new int[];
+
+	int c = 0;
+	for (int i = 0; i < M; i++)
+	{
+		bool Bool = true;
+		for (int j = i - 1; j >= 0; j--) if (A[i] == A[j]) { Bool = false; break; }
+		for (int j = 0; j < N; j++)      if (A[i] == B[j]) { Bool = false; break; }
+		if (Bool) {
+			C[c] = A[i];
+			c++;
+		}
+	}
+	printf("\n");
+
+	for (int k = 0; k < c; k++) printf("%4d", C[k]);
+	printf("\n");
+	system("pause");
+	return 0;
+	delete[] A;
+	delete[] B;
+	delete[] C;
+}
+
+
+Задание 2: 
+Даны два массива: А[M] и B[N] (M и N вводятся с клавиатуры). Необходимо создать третий массив минимально возможного размера, в котором нужно собрать элементы массивов A и B, которые не являются общими для них, без повторений.
+
+#include "stdafx.h" 
+#include <iostream>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	int M, N;
+	printf("Vvedite M i N: ");
+	scanf_s("%d%d", &M, &N);
+	int *A = new int[M];
+	int *B = new int[N];
+	for (int i = 0; i < M; i++)	A[i] = rand() % 20;
+	for (int i = 0; i < N; i++)	B[i] = rand() % 20;
+	for (int i = 0; i < M; i++) printf("%4d", A[i]);
+	printf("\n");
+	for (int i = 0; i < N; i++) printf("%4d", B[i]);
+	int *C = new int[];
+
+	int c = 0;
+	for (int i = 0; i < M; i++)
+	{
+		bool Bool = true;
+		for (int j = i - 1; j >= 0; j--) if (A[i] == A[j]) { Bool = false; break; }
+		for (int j = 0; j < N; j++)      if (A[i] == B[j]) { Bool = false; break; }
+		if (Bool) {
+			C[c] = A[i];
+			c++;
+		}
+	}
+
+	for (int i = 0; i < N; i++)
+	{
+		bool Bool = true;
+		for (int j = i - 1; j >= 0; j--) if (B[i] == B[j]) { Bool = false; break; }
+		for (int j = 0; j < M; j++)      if (B[i] == A[j]) { Bool = false; break; }
+		if (Bool) {
+			C[c] = B[i];
+			c++;
+		}
+	}
+
+	printf("\n");
+	for (int k = 0; k < c; k++) printf("%4d", C[k]);
+	printf("\n");
+	return 0;
+	delete[] A;
+	delete[] B;
+	delete[] C;
+}
+
+Задание 3: 
+Даны два массива: А[M] и B[N] (M и N вводятся с клавиатуры). Необходимо создать третий массив минимально возможного размера, в котором нужно собрать элементы обоих массивов.
+
+#include "stdafx.h" 
+#include <iostream>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	int M, N;
+	printf("Vvedite M i N: ");
+	scanf_s("%d%d", &M, &N);
+	int *A = new int[M];
+	int *B = new int[N];
+	for (int i = 0; i < M; i++)	A[i] = rand() % 20;
+	for (int i = 0; i < N; i++)	B[i] = rand() % 20;
+	for (int i = 0; i < M; i++) printf("%4d", A[i]);
+	printf("\n");
+	for (int i = 0; i < N; i++) printf("%4d", B[i]);
+	int *C = new int[M + N];
+
+	int c = 0;
+	for (int i = 0; i < M; i++) {
+		C[c] = A[i];
+		c++;
+	}
+	for (int i = 0; i < N; i++) {
+		C[c] = B[i];
+		c++;
+	}
+
+	printf("\n");
+	for (int k = 0; k < c; k++) printf("%4d", C[k]);
+	printf("\n");
+	system("pause");
+	return 0;
+	delete[] A;
+	delete[] B;
+	delete[] C;
+}
+
+Задание 4: 
+Даны два массива: А[M] и B[N] (M и N вводятся с клавиатуры). Необходимо создать третий массив минимально возможного размера, в котором нужно собрать общие элементы двух массивов без повторений.
+
+#include "stdafx.h" 
+#include <iostream>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	int M, N;
+	printf("Vvedite M i N: ");
+	scanf_s("%d%d", &M, &N);
+	int *A = new int[M];
+	int *B = new int[N];
+	for (int i = 0; i < M; i++)	A[i] = rand() % 20;
+	for (int i = 0; i < N; i++)	B[i] = rand() % 20;
+	for (int i = 0; i < M; i++) printf("%4d", A[i]);
+	printf("\n");
+	for (int i = 0; i < N; i++) printf("%4d", B[i]);
+	int *C = new int[];
+
+	int c = 0;
+	for (int i = 0; i < M; i++)
+	{
+		bool Bool = false;
+		for (int j = 0; j < N; j++)      if (A[i] == B[j]) { Bool = true; break; }
+		for (int j = i - 1; j >= 0; j--) if (A[i] == A[j]) { Bool = false; break; }
+		if (Bool) {
+			C[c] = A[i];
+			c++;
+		}
+	}
+	printf("\n");
+
+	for (int k = 0; k < c; k++) printf("%4d", C[k]);
+	printf("\n");
+	return 0;
+	delete[] A;
+	delete[] B;
+	delete[] C;
+}
+
+Задание 5: 
+Дан массив: А[M] (M вводится с клавиатуры). Необходимо удалить из массива четные или нечетные значения. Пользователь вводит данные в массив, а также с помощью меню решает, что нужно удалить.
+
+#include "stdafx.h" 
+#include <iostream>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	int M, vibor;
+	printf("Vvedite M (kolichestvo elementov massiva): ");
+	scanf_s("%d", &M);
+	int *A = new int[M];
+	printf("Vvedite elementi massiva:\n");
+	for (int i = 0; i < M; i++)	scanf_s("%d", &A[i]);
+	printf("Kakie elementi nujno udalit'?:\nNechetnie - Vvedite 1\nChetnie - Vvedite 2\n");
+	scanf_s("%d", &vibor);
+	switch (vibor){
+	case (1) :
+		for (int i = 0; i < M; i++)
+		if (A[i] % 2) {
+			for (int j = i; j < M; j++)
+				A[j] = A[j + 1];
+			i--; M--;
+		}
+		break;
+	case (2) :
+		for (int i = 0; i < M; i++)
+		if (!(A[i] % 2)) {
+			for (int j = i; j < M; j++)
+				A[j] = A[j + 1];
+			i--; M--;
+		}
+		break;
+	default: printf("Nepravil'nii vibor!\n"); goto loop;
+	}
+	for (int i = 0; i < M; i++) printf("%4d", A[i]);
+	printf("\n");
+	loop:
+	system("pause");
+	return 0;
+	delete[] A;
+}
+
+Задание 6: 
+Написать функцию, которая получает указатель на динамический массив и его размер. Функция должна удалить из массива все простые числа и вернуть указатель на новый динамический массив.
+
+#include "stdafx.h" 
+#include <iostream>
+
+int *func(int *Mass, int &Size){
+	for (int i = 0; i < Size; i++){
+		int j = Mass[i];
+		do {
+			j--;
+		} while ((j > 1) && (Mass[i] % j));
+		if (j == 1)	{
+			for (int j = i; j < Size; j++)
+				Mass[j] = Mass[j + 1];
+			i--; Size--;
+		}
+	}
+	return Mass;
+	delete[] Mass;
+}
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	int M;
+	int *R;
+	printf("Vvedite M: ");
+	scanf_s("%d", &M);
+	int *A = new int[M];
+	for (int i = 0; i < M; i++)	A[i] = rand() % 10;
+	for (int i = 0; i < M; i++) printf("%4d", A[i]);
+	printf("\n");
+
+	R=func(A, M);
+	
+	for (int i = 0; i < M; i++) printf("%4d", R[i]);
+	printf("\n");
+	system("pause");
+	return 0;
+	delete[] A;
+}
+
+Задание 7: 
+Написать функцию, которая получает указатель на статический массив и его размер. Функция распределяет положительные, отрицательные и нулевые элементы в отдельные динамические массивы.
+
+#include "stdafx.h" 
+#include <iostream>
+
+void func(int *Mass, int N){
+	int *Mass1=new int[N];
+	int *Mass2=new int[N];
+	int *Mass3=new int[N];
+	int j=0;
+	for (int i=0;i<N;i++){
+		if (Mass[i]>0) {Mass1[j]=Mass[i];	j++;}
+	}
+	printf("Massiv1:\n");
+	for (int i=0;i<j;i++) printf("%4d", Mass1[i]);
+
+	j=0;
+	for (int i=0;i<N;i++){
+		if (Mass[i]<0) {Mass2[j]=Mass[i];	j++;}
+	}
+	printf("\nMassiv2:\n");
+	for (int i=0;i<j;i++) printf("%4d", Mass2[i]);
+
+	j=0;
+	for (int i=0;i<N;i++){
+		if (Mass[i]==0) {Mass3[j]=Mass[i];	j++;}
+	}
+	printf("\nMassiv3:\n");
+	for (int i=0;i<j;i++) printf("%4d", Mass3[i]);
+	delete[] Mass1;
+	delete[] Mass2;
+	delete[] Mass3;
+}
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	int mass[50];
+	int n=sizeof(mass)/sizeof(int);
+	for (int i=0;i<n;i++) mass[i]=rand()%40-20;
+	for (int i=0;i<n;i++) printf("%4d", mass[i]);
+	printf("\n");
+	func(mass, n);
+	printf("\n");
+	system("pause");
+	return 0;
+}

@@ -1,0 +1,113 @@
+﻿/*Сделаем небольшую программку:
+1. Разработать структуру списка сотрудников/соседей/друзей/однокурсников (выбрать что кому нравится).
+2. Создать функцию ввода нового (с клавиатуры пока) нового сотрудника/соседа/друга/однокурсника.
+3. Создать функцию добавления нового (…) в массив структур (…) (выделение памяти осуществить функциями malloc calloc realloc).
+4. Создать функцию вывода на экран произвольного (…) по номеру записи
+5. Создать функцию удаления выбранного элемента по номеру из массива.
+6. При удалении сдвинуть оставшиеся элементы влево (в помощь memcpy_s).
+7. Создать функцию вывода на экран списка элементов массива на экран.
+8. Создать функцию замены одного элемента массива другим.
+9. Оформить вывод списка в виде таблицы с номером по порядку, если он не используется в структуре (таблицу можно оформить с помощью кодировки 866).
+10. Создать функцию редактирования выбранного элемента массива.
+11. Создать функцию копирования некоторых элементов списка в отдельный список.
+12. Создать функцию сортировки элементов массива по выбранному параметру (параметр один, либо несколько выбрать самим).
+PS
+Все отсортировано по сложности, делаем до того пункта до которого можем, незабываем в конце почистится, если не нравится темы списков выберите свой,
+единственное пожелание поля в структуре должны быть строки и перечисления, а не только числа (соответственно минимальный набор строка, число, перечисление).
+*/	
+#include "stdafx.h"
+#include <iostream>
+#include <string.h>
+enum ENUM
+{
+	One = 1, Two, Three, Four, Five, Six = 0
+};
+struct Slujba
+{
+	ENUM num;
+	char *name;
+	char age;
+};
+Slujba Add(Slujba newman, char num);
+Slujba Addmem(Slujba *addmem);
+void Printstr(Slujba *printstr);
+void Print(Slujba *print);
+void Delete(Slujba *str);
+void Edit(Slujba *str);
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	Slujba *man = new Slujba[4];
+	man[0].num = One;
+	man[0].name = "Bolzan Sergei";
+	man[0].age = 25;
+	man[1] = { Two, "Kebich Maksim", 23 };
+	man[2] = { Three, "Selyuk Ruslan", 40 };
+	printf("%-3d%-25s%d\n", man[0].num, man[0].name, man[0].age);
+	printf("%-3d%-25s%d\n", man[1].num, man[1].name, man[1].age);
+	printf("%-3d%-25s%d\n", man[2].num, man[2].name, man[2].age);
+	man[3] = Add(man[3], man[2].num);
+	man[4] = Addmem(&man[4]);
+	man[5].num = Six;
+
+	Print(man);
+	Edit(man);
+	Print(man);
+	Printstr(man);
+	Delete(man);
+	Print(man);
+
+	system("pause");
+	return 0;
+	delete[] man;
+}
+Slujba Add(Slujba newman, char num) {
+	printf("Vvedite dannie sotrudnika (Familiya Imya, Vozrast): ");
+	newman.name = new char[50];
+	gets_s(newman.name, 49);
+	scanf_s("%d%*c", &newman.age);
+	newman.num = Four;
+	return newman;
+	delete[] newman.name;
+}
+Slujba Addmem(Slujba *addmem) {
+	printf("Vvedite dannie sotrudnika (Familiya Imya, Vozrast): ");
+	addmem = (Slujba *)malloc(12);
+	addmem->num = Five;
+	addmem->name = (char *)calloc(50, 1);
+	gets_s(addmem->name, 49);
+	scanf_s("%d%*c", &addmem->age);
+	return *addmem;
+	free(addmem);
+	free(addmem->name);
+}
+void Printstr(Slujba *printstr) {
+	printf("Vvedite nomer zapisi, kotoruyu nujno vivesti na ekran: ");
+	int k;
+	scanf_s("%d", &k);
+	for (int i = 0; i <= printstr[4].num; i++) {
+		if (printstr[i].num == k) printf("%-3d%-25s%d\n", printstr[i].num, printstr[i].name, printstr[i].age);
+	}
+}
+void Print(Slujba *print) {
+	while (print->num){
+		printf("%-3d%-25s%d\n", print->num, print->name, print->age);
+		print++;
+	}
+}
+void Delete(Slujba *str) {
+	printf("Vvedite nomer zapisi, kotoruyu nujno udalit': ");
+	int k;
+	scanf_s("%d", &k);
+	if (!memcpy_s(&str[k - 1], 12 * (6 - k), &str[k], 12 * (6 - k))) {
+	}
+}
+void Edit(Slujba *str) {
+	printf("Vvedite nomer zapisi, kotoruyu nujno redaktirovat': ");
+	int k;
+	scanf_s("%d%*c", &k);
+	printf("Vvedite novie dannie (Familiya Imya, Vozrast): ");
+	str[k - 1].name = new char[50];
+	gets_s(str[k - 1].name, 49);
+	scanf_s("%d%*c", &str[k - 1].age);
+}

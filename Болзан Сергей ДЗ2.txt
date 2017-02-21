@@ -1,0 +1,51 @@
+1. Разработать программу с использованием циклов для определения является ли число введенное с клавиатуры простым
+
+#include "stdafx.h"
+#include <stdio.h>
+#include <locale>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_ALL, ".1251");
+	int i, j;
+	printf_s("Введите число, чтобы узнать простое оно или нет: ");
+	scanf_s("%d", &i);
+	j = i;
+	do
+	{
+		j--;
+	} while ((j > 1) && (i % j));
+	if (j == 1)
+	{
+		printf("%d - Простое число\n", i);
+	}
+	else (printf_s("%d - Не простое число\n", i));
+	while (1){}
+	return 0;
+}
+
+2. Переписать программу с магическим числом при помощи оператора switch
+
+#include "stdafx.h"
+#include <stdio.h>
+#include <locale>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_ALL, ".1251");
+	int i, j;
+	printf_s("Введите число, чтобы узнать простое оно или нет: ");
+	scanf_s("%d", &i);
+	j = i;
+	do
+	{
+		j--;
+	} while ((j > 1) && (i % j));
+	switch (j){
+	case 1:
+		printf("%d - Простое число\n", i);
+		break;
+	default:
+		(printf_s("%d - Не простое число\n", i));
+	}
+	while (1){}
+	return 0;
+}

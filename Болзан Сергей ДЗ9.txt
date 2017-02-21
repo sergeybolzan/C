@@ -1,0 +1,105 @@
+﻿/*
+Вспоминаем одно из занятий, когда мы сортировали двумерный массив.
+
+Массив считается отсортирован, если у него отсортирован первый столбец.
+Если мы подвергли сортировке первый столбец, то мы сортируем строки, после этого первый столбец.
+
+Надо:
+1. (Обязательный минимум)
+Переписать программу избавившись от использования статических массивов
+Создать перечисление и проверку условий, выхода из цикла осуществлять при помощи перечислений(я)
+Желательно некоторый функционал реализовать при помощи шаблонов (без фанатизма, шаблоны необходимо использовать там где необходимо)
+2. (Желательно)
+В программе допущена ошибка(и), необходимо найти и исправить
+3. (Режим хард)
+Добиться абсолютной сортировки массива не измменяя алгоритм или принцип сортировки, для этого понадобиться при сортировке столбца
+двигать строками массива а не элементами первого столбца
+4. (Для себя)
+Подсчитать количество иттераций при сортировке как линейного массива и как двумерной реализации режима хард
+*/
+#include "stdafx.h"
+#include <iostream>
+int str_sort(int **mass, int size);
+int bubble_sort(int *mass, int size);
+template <typename T> T inicialize(T **mass, T size1, T size2, T _start);
+template <typename T> T print_mass(T **mass, T size1, T size2);
+enum ENUM { FALSE, TRUE };
+ENUM _bool = FALSE;
+int count;
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_ALL, ".1251");
+	int **i_mass = new int*[10];
+	for (int i = 0; i < 10; i++) {
+		i_mass[i] = new int[10];
+	}
+	inicialize(i_mass, 10, 10, 22);
+	print_mass(i_mass, 10, 10);
+//	int *mass = new int[10];
+	do {
+		if (_bool)
+		for (int i = 0; i < &i_mass[i][10] - &i_mass[i][0]; i++)
+			bubble_sort(i_mass[i], 10);
+		_bool = (ENUM)str_sort(i_mass, 10);
+//	for (int i = 0; i < 9; i++) if (i_mass[i][9] > i_mass[i + 1][0]) { int b = i_mass[i][9]; i_mass[i][9] = i_mass[i + 1][0]; i_mass[i + 1][0] = b; _bool = TRUE; } 
+//	делает полную сортировку, по-другому не получилось
+	} while (_bool);
+	print_mass(i_mass, 10, 10);
+	printf("Количество итераций при сортировке: %d\n", count);
+	for (int i = 0; i < 10; i++) {
+		delete[] i_mass[i];
+	}
+	delete[] i_mass;
+//	delete[] mass;
+	system("pause");
+	return 0;
+}
+
+int str_sort(int **mass, int size) {
+	_bool = FALSE; 
+	for (int i = 0; i < size - 1; i++) {
+		for (int j = 0; j < size - i - 1; j++) {
+			if (*mass[j] > *mass[j + 1]) {
+				int *b = mass[j];
+				mass[j] = mass[j + 1];
+				mass[j + 1] = b;
+				_bool = TRUE;
+				count++;
+			}
+		}
+	}
+	return _bool;
+}
+
+int bubble_sort(int *mass, int size) {
+	_bool = FALSE; 
+	for (int i = 0; i < size - 1; i++) {
+		for (int j = 0; j < size - i - 1; j++) {
+			if (mass[j] > mass[j + 1]) {
+				int b = mass[j];
+				mass[j] = mass[j + 1];
+				mass[j + 1] = b;
+				_bool = TRUE;
+				count++;
+			}
+		}
+	}
+	return _bool;
+}
+
+template <typename T> T inicialize(T **mass, T size1, T size2, T _start) {
+	srand(_start);
+	for (int i = 0; i < size1; i++) {
+		for (int j = 0; j < size2; j++) mass[i][j] = (unsigned char)rand();
+	}
+	return 0;
+}
+
+template <typename T> T print_mass(T **mass, T size1, T size2) {
+	for (int i = 0; i < size1; i++) {
+		for (int j = 0; j < size2; j++) printf("%4d", mass[i][j]);
+		printf("\n");
+	}
+	printf("\n");
+	return 0;
+}

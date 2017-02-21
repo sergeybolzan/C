@@ -1,0 +1,94 @@
+﻿Задача по массивам 
+
+Вводятся два натуральных числа K N.
+Формируется последовательность действительных чисел (A1, A2, ... , Akn)
+Нобходимо сформировать последовательности
+- (A1 + ... + Ak, Ak+1 + ... + A2k, ... , An-k + ... + Akn )
+- Max(A1, ... , Ak), Max(Ak+1, ... ,A2k), ... , Max(An-k, ... , Akn )
+- Min(A1, ... , Ak)+Min(Ak+1, ... ,A2k)+ ... + Min(An-k, ... , Akn )
+- Max(A1 + ... + Ak, Ak+1 + ... + A2k, ... , An-k + ... + Akn )
+- Min(Max(A1, ... , Ak), Max(Ak+1, ... ,A2k), ... , Max(An-k, ... , Akn )) 
+
+Сделал только 1-ю часть
+
+#include "stdafx.h" 
+#include <iostream>
+void main()
+{
+	int k, n, kn, i, a, x, y;
+	printf("Vvedite K i N:\n");
+	scanf_s("%d%d", &k, &n);
+	kn = 1 + log10(n);
+	kn = pow(10, kn);
+	kn = k * kn + n;
+
+	int *mass1 = new int[kn];
+	int *mass2 = new int[kn];
+	for (i = 0; i <= kn; i++) mass1[i] = i;
+	for (i = 1; i <= kn; i++) printf("%4d", mass1[i]);
+	printf("\n");
+
+	i = -1;
+	do{
+		i++;
+		a = 0;
+		x = i*k + 1;
+		y = (i + 1)*k;
+		for (x; x <= y; x++) a += mass1[x];
+		mass2[i] = a;
+	} while ((i + 1)*k <= k*n);
+	for (i = 0; i <= n; i++) printf("%4d", mass2[i]);
+	printf("\n");
+	system("pause");
+}
+
+Дано натуральное число N. Разработать алгоритм и программу поиска среди чисел от 1 до N всех таких чисел, запись которых совпадает с последними цифрами записи их квадрата. (Например, 6*6=36, 25*25=625).
+
+#include "stdafx.h" 
+#include <iostream>
+void main()
+{
+	int n;
+	printf("Vvedite N: ");
+	scanf_s("%d", &n);
+	int x, y;
+	for (int i = 1; i <= n; i++) {
+		y = 1 + log10(i);
+		y = pow(10, y);
+		x = i*i;
+		if (i == (x % y)) printf("%d\n", i);
+	}
+	system("pause");
+}
+
+Разработать алгоритм и программу нахождения наибольшего общего делителя (двух и более чисел).
+
+#include "stdafx.h" 
+#include <iostream>
+template <class T> T NOD(T A, T B){
+	return B ? NOD(B, A % B) : A;
+}
+void main()
+{
+	int n;
+	printf("n=");
+	scanf_s("%d", &n);
+
+	int a, b;
+	printf("a1=");
+	scanf_s("%d", &a);
+
+	for (int i = 2; i <= n; ++i){
+		printf("a%d=", i);
+		scanf_s("%d", &b);
+		a = NOD(a, b);
+	}
+	printf("NOD = %d\n", a);
+	system("pause");
+}
+
+
+
+
+
+

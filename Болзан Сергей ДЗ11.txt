@@ -1,0 +1,510 @@
+﻿Тема: Многомерные динамические массивы
+Задание 1:
+Написать функцию, добавляющую столбец двухмерному массиву в указанную позицию.
+Задание 2:
+Написать функцию, удаляющую столбец двухмерного массива по указанному номеру.
+Задание 3:
+Дана матрица порядка MxN (M строк, N столбцов). Необходимо заполнить ее значениями и написать функцию, осуществляющую циклический сдвиг строк и/или столбцов массива указанное количество раз и в указанную сторону.
+Задание 4: 
+Транспонирование матрицы – это операция, после которой столбцы прежней матрицы становятся строками, а строки столбцами. Напишите функцию транспонирования матрицы.
+
+#include "stdafx.h"
+#include <iostream>
+void inicialize(int **massiv, int size1, int size2);
+void print_mass(int **massiv, int size1, int size2);
+void add(int **massiv, int size1, int size2);
+void delet(int **massiv, int size1, int size2);
+void sdvig(int **massiv, int size1, int size2);
+void sdvig_vpravo(int **mass_i, int size1, int size2, int iter);
+void sdvig_vlevo(int **mass_i, int size1, int size2, int iter);
+void sdvig_vniz(int **mass_i, int size1, int size2, int iter);
+void sdvig_vverh(int **mass_i, int size1, int size2, int iter);
+int **transp(int **massiv1, int size1, int size2);
+int _tmain(int argc, _TCHAR* argv[])
+{
+	int **mass = (int**)malloc(10 * sizeof (int));
+	for (int i = 0; i < 10; i++) {
+		mass[i] = (int*)malloc(10 * sizeof (int));
+	}
+	inicialize(mass, 10, 10);
+	print_mass(mass, 10, 10);
+	add(mass, 10, 10);
+	print_mass(mass, 10, 11);
+	delet(mass, 10, 11);
+	print_mass(mass, 10, 10);
+	sdvig(mass, 10, 10);
+	print_mass(mass, 10, 10);
+	mass = transp(mass, 10, 10);
+	print_mass(mass, 10, 10);
+	for (int i = 0; i < 10; i++) {
+		free(mass[i]);
+	}
+	free(mass);
+	system("pause");
+	return 0;
+}
+void inicialize(int **massiv, int size1, int size2) {
+	for (int i = 0; i < size1; i++)
+	for (int j = 0; j < size2; j++) massiv[i][j] = rand() % 100;
+}
+void print_mass(int **massiv, int size1, int size2) {
+	for (int i = 0; i < size1; i++) {
+		for (int j = 0; j < size2; j++) printf("%4d", massiv[i][j]);
+		printf("\n");
+	}
+}
+void add(int **massiv, int size1, int size2) {
+	printf("Vvedite nomer stolbca, posle kotorogo nujno dobavit' novii stolbec: ");
+	int k;
+	scanf_s("%d", &k);
+	for (int i = 0; i < size1; i++)
+		massiv[i] = (int*)realloc(massiv[i], (size2 + 1) * sizeof (int));
+	for (int i = 0; i < size1; i++)
+	for (int j = size2 - 1; j > k - 1; j--)
+		massiv[i][j + 1] = massiv[i][j];
+	for (int i = 0, j = k; i < size1; i++)
+		massiv[i][j] = rand() % 100;
+}
+void delet(int **massiv, int size1, int size2) {
+	printf("Vvedite nomer stolbca, kotorii nujno udalit': ");
+	int k;
+	scanf_s("%d", &k);
+	for (int i = 0; i < size1; i++)
+	for (int j = k - 1; j < size2 - 1; j++)
+		massiv[i][j] = massiv[i][j + 1];
+	for (int i = 0; i < size1; i++)
+		massiv[i] = (int*)realloc(massiv[i], (size2 - 1) * sizeof (int));
+}
+void sdvig(int **massiv, int size1, int size2) {
+	printf("Kuda nujno sdvinut' matricu?\nVpravo - najmite 1\nVlevo  - najmite 2\nVniz   - najmite 3\nVverh  - najmite 4\n");
+	int k, l;
+	scanf_s("%d", &k);
+	printf("Skol'ko raz sdvinut'?: ");
+	scanf_s("%d", &l);
+	switch (k) {
+	case 1: {
+				sdvig_vpravo(massiv, size1, size2, l);
+				break;
+	}
+	case 2: {
+				sdvig_vlevo(massiv, size1, size2, l);
+				break;
+	}
+	case 3: {
+				sdvig_vniz(massiv, size1, size2, l);
+				break;
+	}
+	case 4: {
+				sdvig_vverh(massiv, size1, size2, l);
+	}
+	}
+}
+void sdvig_vpravo(int **mass_i, int size1, int size2, int iter) {
+	int el;
+	for (int m = 1; m <= iter; m++) {
+		for (int i = 0; i < size1; i++) {
+			el = mass_i[i][size2 - 1];
+			for (int j = size2 - 1; j > 0; j--)		mass_i[i][j] = mass_i[i][j - 1];
+			mass_i[i][0] = el;
+		}
+	}
+}
+void sdvig_vlevo(int **mass_i, int size1, int size2, int iter) {
+	int el;
+	for (int m = 1; m <= iter; m++) {
+		for (int i = 0; i < size1; i++) {
+			el = mass_i[i][0];
+			for (int j = 0; j < size2 - 1; j++)		mass_i[i][j] = mass_i[i][j + 1];
+			mass_i[i][size2 - 1] = el;
+		}
+	}
+}
+void sdvig_vniz(int **mass_i, int size1, int size2, int iter) {
+	int el;
+	for (int m = 1; m <= iter; m++) {
+		for (int i = 0; i < size2; i++) {
+			el = mass_i[size1 - 1][i];
+			for (int j = size1 - 1; j > 0; j--)		mass_i[j][i] = mass_i[j - 1][i];
+			mass_i[0][i] = el;
+		}
+	}
+}
+void sdvig_vverh(int **mass_i, int size1, int size2, int iter) {
+	int el;
+	for (int m = 1; m <= iter; m++) {
+		for (int i = 0; i < size2; i++) {
+			el = mass_i[0][i];
+			for (int j = 0; j < size1 - 1; j++)		mass_i[j][i] = mass_i[j + 1][i];
+			mass_i[size1 - 1][i] = el;
+		}
+	}
+}
+int **transp(int **massiv1, int size1, int size2) {
+	int **massiv2 = (int**)malloc(size1 * sizeof (int));
+	for (int i = 0; i < size1; i++) {
+		massiv2[i] = (int*)malloc(size2 * sizeof (int));
+	}
+	for (int j = size2 - 1; j >= 0; j--)
+	for (int i = 0; i < size1; i++)
+		massiv2[abs(j-(size2 - 1))][i] = massiv1[i][j];
+	printf("Transponirovannaya matrica\n");
+	return massiv2;
+	for (int i = 0; i < size1; i++) {
+		free(massiv2[i]);
+	}
+	free(massiv2);
+}
+
+Задание 5: 
+Создайте динамический массив, хранящий в первой строке имя, а во второй - телефон. Организуйте поиск по имени и по номеру телефона и возможность ввода и изменения данных.
+
+#include "stdafx.h"
+#include <iostream>
+void print(char **massiv);
+char** add(char **massiv, int nomer_stroki);
+void edit(char **massiv);
+void search(char **massiv, int vsego_strok);
+int _tmain(int argc, _TCHAR* argv[])
+{
+	char **mass = (char**)malloc(2 * sizeof (char*));
+	mass[0] = (char*)malloc(10 * sizeof (char));
+	mass[1] = (char*)malloc(10 * sizeof (char));
+	mass[0] = "Sergei";
+	mass[1] = "291586149";
+	mass[2] = 0;
+	print(mass);
+	mass = add(mass, 2);
+	print(mass);
+	mass = add(mass, 4);
+	print(mass);
+	edit(mass);
+	print(mass);
+	search(mass, 6);
+	system("pause");
+	return 0;
+}
+char** add(char **massiv, int nomer_stroki){
+	massiv = (char**)realloc(massiv, 2 * sizeof (char*) + nomer_stroki * sizeof (char*));
+	massiv[nomer_stroki] = (char*)malloc(10 * sizeof (char));
+	massiv[nomer_stroki + 1] = (char*)malloc(10 * sizeof (char));
+	printf("Vvedite imya i telefon: ");
+	gets_s(massiv[nomer_stroki], 10);
+	gets_s(massiv[nomer_stroki + 1], 10);
+	massiv[nomer_stroki + 2] = 0;
+	printf("\n");
+	return massiv;
+}
+void print(char **massiv){
+	while (*massiv) {
+		printf("%s\n", *massiv);
+		massiv++;
+	} printf("\n");
+}
+void edit(char **massiv){
+	printf("Kakuyu stroku redaktirovat'?: ");
+	int a;
+	scanf_s("%d%*c", &a);
+	printf("Vvedite novoe znachenie: ");
+	massiv[a - 1] = (char*)malloc(10 * sizeof (char));
+	gets_s(massiv[a - 1], 10);
+	printf("\n");
+}
+void search(char **massiv, int vsego_strok){
+	printf("Kakoe znachenie naiti?: ");
+	char *str = new char[10];
+	gets_s(str, 10);
+	for (int i = 0; i < vsego_strok; i++){
+		if (strstr(massiv[i], str)) printf("Znachenie est' v stroke %d\n", i + 1);
+	}
+}
+
+Тема: Структуры
+Задание 1: 
+Создайте структуру, описывающую комплексное число. Реализуйте арифметические операции с комплексными числами: сумму, разность, умножение, деление.
+
+#include "stdafx.h"
+#include <iostream>
+struct Complex {
+	double re;
+	double im;
+};
+Complex Sum(Complex first, Complex second) {
+	Complex result = { first.re + second.re, first.im + second.im };
+	return result; }
+Complex Diff(Complex first, Complex second) {
+	Complex result = { first.re - second.re, first.im - second.im };
+	return result; }
+Complex Mult(Complex first, Complex second) {
+	Complex result = { first.re * second.re - first.im * second.im, first.im * second.re + first.re * second.im };
+	return result; }
+Complex Div(Complex first, Complex second) {
+	Complex result = { (first.re * second.re + first.im * second.im) / (second.re*second.re + second.im*second.im), (first.im * second.re - first.re * second.im) / (second.re*second.re + second.im*second.im) };
+	return result; }
+int _tmain(int argc, _TCHAR* argv[])
+{
+	Complex chislo1 = { 5, 7 };
+	Complex chislo2 = { 3, 4 };
+	printf("Sum=%.f+%.fi\n", Sum(chislo1, chislo2));
+	printf("Diff=%.f+%.fi\n", Diff(chislo1, chislo2));
+	printf("Mult=%.f+%.fi\n", Mult(chislo1, chislo2));
+	printf("Div=%.2f+%.2fi\n", Div(chislo1, chislo2));
+	system("pause");
+	return 0;
+}
+
+Задание 2: 
+Реализовать структуру «Автомобиль» (длина, клиренс (высота посадки), объем двигателя, мощность двигателя, диаметр колес, цвет, тип коробки передач). Создайте функции для задания значений, отображения значений, поиска значений.
+
+#include "stdafx.h"
+#include <iostream>
+struct Auto {
+	char *name;
+	int lenght;
+	int clearance;
+	float capacity;
+	int power;
+	int tire_size;
+	char *color;
+	char *transmis;
+	int end;
+};
+void Add(Auto *car);
+void Print(Auto *print);
+void Search(Auto *car);
+int _tmain(int argc, _TCHAR* argv[])
+{
+	Auto *car = new Auto[10];
+	car[0] = { "Bmw", 5098, 135, 4.4, 450, 18, "black", "automatic" };
+	car[1] = { "Mercedes", 5246, 140, 5.5, 585, 19, "white", "automatic" };
+	Add(&car[2]);
+	Print(car);
+	Search(car);
+	system("pause");
+	return 0;
+}
+void Add(Auto *car){
+	printf("Vvedite dannie avto:\nName: ");
+	car->name = new char[10];
+	gets_s(car->name, 10);
+	printf("Lenght: ");
+	scanf_s("%d", &car->lenght);
+	printf("Clearance: ");
+	scanf_s("%d", &car->clearance);
+	printf("Capacity: ");
+	scanf_s("%f", &car->capacity);
+	printf("Power: ");
+	scanf_s("%d", &car->power);
+	printf("Tire size: ");
+	scanf_s("%d%*c", &car->tire_size);
+	car->color = new char[10];
+	printf("Color: ");
+	gets_s(car->color, 10);
+	car->transmis = new char[10];
+	printf("Transmission: ");
+	gets_s(car->transmis, 10);
+	car->end = 0;
+}
+void Print(Auto *print) {
+	printf("Name      Lenght Clearance Capacity Power Tire size    Color     Transmission\n");
+	while (!print->end){
+		printf("%-10s%-7d%-10d%-9.1f%-6d%-13d%-10s%-10s\n", print->name, print->lenght, print->clearance, print->capacity, print->power, print->tire_size, print->color, print->transmis);
+		print++;
+	}
+}
+void Search(Auto *car){
+	printf("Kakoe znachenie naiti?: ");
+	char *str = new char[10];
+	gets_s(str, 10);
+	while (!car->end){
+		if (strstr(car->name, str)) printf("%-10s%-7d%-10d%-9.1f%-6d%-13d%-10s%-10s\n", car->name, car->lenght, car->clearance, car->capacity, car->power, car->tire_size, car->color, car->transmis);
+		car++; }
+}
+
+Задание 3:
+Разработайте программу «Библиотека». Создайте структуру «Книга» (название, автор, издательство, жанр). Создайте массив из 10 книг. Реализуйте для него следующие возможности:
+	Редактировать книгу
+	Печать всех книг
+	Поиск книг по автору
+	Поиск книги по названию
+	Сортировка массива по названию книг
+	Сортировка массива по автору
+	Сортировка массива по издательству
+
+﻿﻿//сменить шрифт в консоли на lucida!
+#include "stdafx.h"
+#include <iostream>
+#include "Windows.h"
+struct Biblio {
+	int pp;
+	char *name;
+	char *avtor;
+	char *izdat;
+	char *janr;
+};
+void Edit(Biblio *book);
+void Print(Biblio *book);
+void Search_avtor(Biblio *book);
+void Search_name(Biblio *book);
+void Sort_name(Biblio *book);
+void Sort_avtor(Biblio *book);
+void Sort_izdat(Biblio *book);
+int _tmain(int argc, _TCHAR* argv[])
+{
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	Biblio *kniga = new Biblio[10];
+	kniga[0] = { 1, "Мастер и Маргарита", "Михаил Булгаков", "АСТ", "Роман" };
+	kniga[1] = { 2, "Идиот", "Федор Достоевский", "Азбука", "Роман" };
+	kniga[2] = { 3, "Война и мир", "Лев Толстой", "Эксмо", "Роман" };
+	kniga[3] = { 4, "Двенадцать стульев", "Илья Ильф", "АСТ", "Сатира" };
+	kniga[4] = { 5, "Приключения Шерлока Холмса", "Артур Конан Дойль", "Азбука", "Детектив" };
+	kniga[5] = { 6, "Старик и море", "Эрнест Хемингуэй", "Астрель", "Повесть" };
+	kniga[6] = { 7, "А зори здесь тихие", "Борис Васильев", "Эксмо", "Повесть" };
+	kniga[7] = { 8, "Незнайка на Луне", "Николай Носов", "Махаон", "Роман" };
+	kniga[8] = { 9, "Зеленая миля", "Стивен Кинг", "Азбука", "Триллер" };
+	kniga[9] = { 10, "Собачье сердце", "Михаил Булгаков", "Эксмо", "Сатира" };
+	Print(kniga);
+	Edit(kniga);
+	Print(kniga);
+	Search_avtor(kniga);
+	Search_name(kniga);
+	Sort_name(kniga);
+	Print(kniga);
+	Sort_avtor(kniga);
+	Print(kniga);
+	Sort_izdat(kniga);
+	Print(kniga);
+	system("pause");
+	return 0;
+}
+void Edit(Biblio *book){
+	printf("Какую запись редактировать?: ");
+	int i;
+	scanf_s("%d%*c", &i);
+	book[i - 1].name = new char[20];
+	book[i - 1].avtor = new char[20];
+	book[i - 1].izdat = new char[20];
+	book[i - 1].janr = new char[20];
+	printf("Введите название: ");
+	gets_s(book[i - 1].name, 20);
+	printf("Введите автора: ");
+	gets_s(book[i - 1].avtor, 20);
+	printf("Введите издательство: ");
+	gets_s(book[i - 1].izdat, 20);
+	printf("Введите жанр: ");
+	gets_s(book[i - 1].janr, 20);
+	printf("\n");
+}
+void Print(Biblio *book) {
+	printf("№  Название                    Автор               Издательство    Жанр\n");
+	while (book->pp > 0){
+		printf("%-3d%-28s%-20s%-16s%-10s\n", book->pp, book->name, book->avtor, book->izdat, book->janr);
+		book++;
+	}
+}
+void Search_avtor(Biblio *book){
+	printf("Какую книгу найти? Введите автора: ");
+	char *str = new char[20];
+	gets_s(str, 20);
+	while (book->pp > 0){
+		if (strstr(book->avtor, str)) printf("%-3d%-28s%-20s%-16s%-10s\n", book->pp, book->name, book->avtor, book->izdat, book->janr);
+		book++;
+	}
+}
+void Search_name(Biblio *book){
+	printf("Какую книгу найти? Введите название книги: ");
+	char *str = new char[20];
+	gets_s(str, 20);
+	while (book->pp > 0){
+		if (strstr(book->name, str)) printf("%-3d%-28s%-20s%-16s%-10s\n", book->pp, book->name, book->avtor, book->izdat, book->janr);
+		book++;
+	}
+}
+void Sort_name(Biblio *book){
+	printf("\nСортировка по названию:\n");
+	for (int i = 0; i < 10 - 1; i++) {
+		for (int j = 0; j < 10 - i - 1; j++) {
+			if (strcmp(book[j].name, book[j + 1].name) > 0) {
+				Biblio b = book[j];
+				book[j] = book[j + 1];
+				book[j + 1] = b;
+			}
+		}
+	}
+}
+void Sort_avtor(Biblio *book){
+	printf("\nСортировка по автору:\n");
+	for (int i = 0; i < 10 - 1; i++) {
+		for (int j = 0; j < 10 - i - 1; j++) {
+			if (strcmp(book[j].avtor, book[j + 1].avtor) > 0) {
+				Biblio b = book[j];
+				book[j] = book[j + 1];
+				book[j + 1] = b;
+			}
+		}
+	}
+}
+void Sort_izdat(Biblio *book){
+	printf("\nСортировка по издательству:\n");
+	for (int i = 0; i < 10 - 1; i++) {
+		for (int j = 0; j < 10 - i - 1; j++) {
+			if (strcmp(book[j].izdat, book[j + 1].izdat) > 0) {
+				Biblio b = book[j];
+				book[j] = book[j + 1];
+				book[j + 1] = b;
+			}
+		}
+	}
+}
+
+Задание 4: 
+Реализовать структуру «Машина» (цвет, модель, номер). Номер машины может представлять из себя или пятизначный номер или слово до 8 символов. 
+Рекомендации: номер реализовать как объединение.
+Создать экземпляр структуры «Машина» и реализовать для него следующие функции:
+	Заполнение машины
+	Печать машины
+Создать массив из 10 экземпляров структуры «Машина» и реализовать для него следующие функции:
+	Редактировать машину
+	Печать всех машин
+	Поиск машины по номеру
+
+#include "stdafx.h"
+#include <iostream>
+struct Mashina {
+	int pp;
+	char *color;
+	char *model;
+	union Nomer {
+		int a;
+		char b[8];
+	}number;
+};
+void Print(Mashina *car, int i) {
+	printf("#  Cvet      Model     Nomer\n");
+	while (car->pp > 0){
+		if (i == 1)	printf("%-3d%-10s%-10s%d\n", car->pp, car->color, car->model, car->number.a);
+		else printf("%-3d%-10s%-10s%s\n", car->pp, car->color, car->model, car->number.b);
+		car++;
+	}
+}
+int _tmain(int argc, _TCHAR* argv[])
+{
+	Mashina *car = new Mashina[10];
+	car[0].pp = 1;
+	car[0].color = new char[20];
+	car[0].model = new char[20];
+	printf("Vvedite cvet: ");
+	gets_s(car[0].color, 20);
+	printf("Vvedite model: ");
+	gets_s(car[0].model, 20);
+	printf("Kakoi budet nomer mashini?\nPyatiznachnii - vvedite 1\nSlovo do 8 simvolov - vvedite 2\n");
+	int i;
+	scanf_s("%d%*c", &i);
+	printf("Vvedite nomer: ");
+	if (i == 1)	scanf_s("%d", &car[0].number.a);
+	else gets_s(car[0].number.b, 8);
+	printf("\n");
+	Print(car, i);
+	system("pause");
+	return 0;
+}

@@ -1,0 +1,219 @@
+﻿Реализовать задания по одномерным и многомерным массивам в виде функций, для группы П52015 функции Min, Max, суммы, мат. ожидания и дисперсии - в виде шаблонов 
+Пример объявления
+template <typename T> T Min(T A, T B);
+
+Одномерные массивы
+
+1. Создать одномерный массив на 100 элементов ввести первые 10 элементов с клавиатуры.
+2. Присвоить оставшимся элементам массива случайные числа rand().
+3. Вывести массив на экран 10 строк х 10 столбцов
+4. Присвоить элементам массива с 10 по 99 случайные элементы:
+	а) для каждого десятка вызвать функцию srand() - в качестве аргумента используются первые девять элементов массива
+	б) новое значение присваивается как сумма - если случайное число rand() - четное и разность если нечетное
+5. Вывести массив на экран
+6. Найти минимальное и максимальное значение
+7. Найти сумму элементов со своим знаком и по модулю - вывести на экран
+8. Найти математическое ожидание полученного ряда - вывести на экран
+9. Найти дисперсию - вывести на экран
+
+#include "stdafx.h" 
+#include <stdio.h> 
+#include <locale> 
+#include <stdlib.h>
+
+template <typename T> T Min(T A, T B) {
+	return (A < B) ? (A) : (B);
+}
+template <typename T> T Max(T A, T B) {
+	return (A > B) ? (A) : (B);
+}
+template <typename T> T Sum_pol(T A, T B) {
+	if (B > 0) A += B;
+	return A;
+}
+template <typename T> T Sum_otr(T A, T B) {
+	if (B < 0) A += B;
+	return A;
+}
+template <typename T> T Sum_mod(T A, T B) {
+	A += abs(B);
+	return A;
+}
+template <typename T> T Mat_oj(T A, T B) {
+	return A = B / N;
+}
+template <typename T> T Disp(T A, T B) {
+	for (i = 0; i < N; i++) {
+		A += mass[i] * mass[i];
+	}
+	A = A / N;
+	return A = sqrt(A - B*B);
+}
+
+int mass[100];
+int i, mat_oj, disp, x, N = sizeof(mass) / sizeof(int);
+
+void Start();
+void printMass();
+void Sluch_el();
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_ALL, ".1251");
+	Start();
+	printMass();
+	Sluch_el();
+	printMass();
+
+	int min = mass[0], max = mass[0], sum_pol = 0, sum_otr = 0, sum_mod = 0;
+	for (i = 0; i < N; i++) {
+		min = Min(min, mass[i]);
+		max = Max(max, mass[i]);
+		sum_pol = Sum_pol(sum_pol, mass[i]);
+		sum_otr = Sum_otr(sum_otr, mass[i]);
+		sum_mod = Sum_mod(sum_mod, mass[i]);
+	}
+	int sum_all = sum_pol + sum_otr;
+	mat_oj = Mat_oj(mat_oj, sum_all);
+	disp = Disp(x, mat_oj);
+	printf("\nmin = %d, max = %d, sum_pol = %d, sum_otr = %d, sum_mod = %d\nmat_oj = %d,\tdisp = %d\n", min, max, sum_pol, sum_otr, sum_mod, mat_oj, disp);
+	system("pause");
+	return 0;
+}
+
+void Start() {
+	printf("Введите 10 элементов массива:\n");
+	for (i = 0; i < 10; i++) scanf_s("%d", &mass[i]);
+	for (i = 10; i < N; i++) {
+		mass[i] = (unsigned char)rand();
+	}
+}
+void printMass() {
+	printf("\n");
+	for (i = 0; i < N; i++) {
+		printf("%8d", mass[i]);
+	}
+}
+void Sluch_el() {
+	int k = 0;
+	for (i = 10; i < N; i++) {
+		if (k != i / 10) {
+			k = i / 10;
+			srand(mass[k]);
+		}
+		if (mass[i] % 2)
+			mass[i] -= (unsigned char)rand();
+		else mass[i] += (unsigned char)rand();
+	}
+}
+
+Многомерные массивы
+
+1. Создать двумерный массив на 100 элементов ввести строку с клавиатуры.
+2. Присвоить оставшимся элементам массива случайные числа rand().
+3. Вывести массив на экран
+4. Присвоить элементам массива с 0 строки случайные элементы:
+	а) для каждой строки функцию srand() - в качестве аргумента используются первый элемент строки
+	б) новое значение присваивается как сумма - если случайное число rand() - нечетное и разность если четное
+5. Вывести массив на экран 10 строк х 10 столбцов
+6. Найти минимальное и максимальное значение
+7. Найти сумму элементов со своим знаком и по модулю - вывести на экран
+8. Найти математическое ожидание полученного ряда - вывести на экран
+9. Найти дисперсию - вывести на экран
+
+**
+При реализации заданий с одномерными и многомерными массивами попытаться реализовать универсальные функции подходящие и для одномерного и двумерного массива
+
+#include "stdafx.h" 
+#include <stdio.h> 
+#include <locale> 
+#include <stdlib.h>
+
+template <typename T> T Min(T A, T B) {
+	return (A < B) ? (A) : (B);
+}
+template <typename T> T Max(T A, T B) {
+	return (A > B) ? (A) : (B);
+}
+template <typename T> T Sum_pol(T A, T B) {
+	if (B > 0) A += B;
+	return A;
+}
+template <typename T> T Sum_otr(T A, T B) {
+	if (B < 0) A += B;
+	return A;
+}
+template <typename T> T Sum_mod(T A, T B) {
+	A += abs(B);
+	return A;
+}
+template <typename T> T Mat_oj(T A, T B) {
+	return A = B / N;
+}
+template <typename T> T Disp(T A, T B) {
+	for (i = 0; i < 10; i++) {
+		for (j = 0; j < 10; j++) {
+			A += mass[i][j] * mass[i][j];
+		}
+	}
+	A = A / N;
+	return A = sqrt(A - B*B);
+}
+
+int mass[10][10];
+int i, j, mat_oj, disp, x, N = sizeof(mass) / sizeof(int);
+
+void Start();
+void printMass();
+void Sluch_el();
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_ALL, ".1251");
+	Start();
+	printMass();
+	Sluch_el();
+	printMass();
+
+	int min = mass[0][0], max = mass[0][0], sum_pol = 0, sum_otr = 0, sum_mod = 0;
+	for (i = 0; i < 10; i++) {
+		for (j = 0; j < 10; j++) {
+			min = Min(min, mass[i][j]);
+			max = Max(max, mass[i][j]);
+			sum_pol = Sum_pol(sum_pol, mass[i][j]);
+			sum_otr = Sum_otr(sum_otr, mass[i][j]);
+			sum_mod = Sum_mod(sum_mod, mass[i][j]);
+		}
+	}
+	int sum_all = sum_pol + sum_otr;
+	mat_oj = Mat_oj(mat_oj, sum_all);
+	disp = Disp(x, mat_oj);
+	printf("\nmin = %d, max = %d, sum_pol = %d, sum_otr = %d, sum_mod = %d\nmat_oj = %d,\tdisp = %d\n", min, max, sum_pol, sum_otr, sum_mod, mat_oj, disp);
+	system("pause");
+	return 0;
+}
+
+void Start() {
+	printf("Введите строку из 10 элементов:\n");
+	for (i=0, j = 0; j < 10; j++) scanf_s("%d", &mass[i][j]);
+	for (i = 1; i < 10; ++i){
+		for (j = 0; j < 10; ++j) mass[i][j] = (unsigned char)rand();
+	}
+}
+
+void printMass() {
+	printf("\n");
+	for (i = 0; i < 10; i++){
+		for (j = 0; j < 10; j++) printf("%7d ", mass[i][j]);
+	}
+}
+
+void Sluch_el() {
+	for (i = 0; i < 10; i++){
+		for (j = 1; j < 10; j++) {
+			srand(mass[i][0]);
+			if (mass[i][j] % 2) mass[i][j] -= (unsigned char)rand();
+			else mass[i][j] += (unsigned char)rand();
+		}
+	}
+}

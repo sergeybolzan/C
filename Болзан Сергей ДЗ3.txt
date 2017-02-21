@@ -1,0 +1,181 @@
+1. Пользователь вводит две границы диапазона, вывести на экран все числа из этого диапазона. Предусмотреть, чтобы пользователь мог вводить границы диапазона в произвольном порядке.
+1.1. вывести все четные числа из диапазона.
+1.2. вывести все нечетные числа из диапазона.
+1.3. вывести все числа, кратные семи.
+
+#include "stdafx.h"
+#include <stdio.h>
+#include <locale>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_ALL, ".1251");
+	int i, j, k, s = 0;
+	int min, max;
+	printf("Введите 1-ю границу диапазона: ");
+	scanf_s("%d", &i);
+	printf("Введите 2-ю границу диапазона: ");
+	scanf_s("%d", &j);
+	if (i < j) { min = i; max = j; }
+	else { min = j; max = i; }
+	printf("Числа диапазона: ");
+	for (k = min; k <= max; k++)	printf("%d ", k);
+	printf("\nЧетные числа диапазона: ");
+	for (k = min; k <= max; k++) {
+		if (!(k % 2)) printf("%d ", k);
+	}
+	printf("\nНечетные числа диапазона: ");
+	for (k = min; k <= max; k++) {
+		if (k % 2) printf("%d ", k);
+	}
+	printf("\nЧисла, кратные 7: ");
+	for (k = min; k <= max; k++) {
+		if (!(k % 7)) s = printf("%d ", k);
+	}
+	if (s == 0) printf("Нету");
+	while (1){}
+	return 0;
+}
+
+2. Пользователь с клавиатуры вводит числа. Посчитать их сумму и вывести на экран, как только пользователь введет ноль.
+
+#include "stdafx.h"
+#include <stdio.h>
+#include <locale>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_ALL, ".1251");
+	int j, sum=0;
+	printf("Введите числа:\n");
+	for (;;) {
+		scanf_s("%d", &j);
+		if (j == 0) break;
+		sum += j;
+	}
+	printf("Сумма чисел равна: %d", sum);
+	while (1){}
+	return 0;
+}
+
+3. Пользователь вводит две границы диапазона K, N. Подсчитать сколько простых чисел входит в поддиапазоны K, N. Где поддиапазоны это множества (K..N), (K+1..N), (K+2..N) и т.д.
+
+#include "stdafx.h"
+#include <stdio.h>
+#include <locale>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_ALL, ".1251");
+	int i, j, l, K, N, s = 0;
+	printf("Введите K границу диапазона: ");
+	scanf_s("%d", &K);
+	printf("Введите N границу диапазона: ");
+	scanf_s("%d", &N);
+	do {
+		if (s == 0) printf("\nКоличество простых чисел в поддиапазоне (K..N): ");
+		else printf("\nКоличество простых чисел в поддиапазоне (K+%d..N): ", s);
+		s++;
+		l = 0;
+		for (i = K; i <= N; i++) {
+			j = i;
+			do {
+				j--;
+			} while ((j > 1) && (i % j));
+			if (j == 1)	{
+				l++;
+			}
+		}
+		printf("%d", l);
+		K++;
+	} while (K != N);
+	printf("\nK+%d=N", s);
+	while (1){}
+	return 0;
+}
+
+##############################################################################
+int k = 78, i = 3;
+while (k > i) {	k -= i; }  // Зменить цикл одним оператором
+printf("%d", k);
+
+
+Ответ:
+int k = 78, i = 3;
+go:
+	k -= i;
+	if (k > i) goto go;
+	printf("%d", k);
+
+
+
+
+
+Задание по массивам
+1. Создать массив на 20 элементов, значения ввести с клавиатуры
+2. Вывести на экран все простые элементы массива
+3. Во второй массив вывести все четные элементы мвссива
+4. Из массива убрать все повторяющиеся элементы (присвоить 0)
+
+#include "stdafx.h"
+#include <stdio.h>
+#include <locale>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_ALL, ".1251");
+	int i, j, k, mass1[20], mass2[20];
+	printf("Введите массив из 20 элементов:\n");
+	for (i = 0; i < 20; i++)	scanf_s("%d", &mass1[i]);
+	printf("Простые числа массива: ");
+	for (i = 0; i < 20; i++){
+		j = mass1[i];
+		do {
+			j--;
+		} while ((j > 1) && (mass1[i] % j));
+		if (j == 1)	printf("%d ", mass1[i]);
+	}
+	printf("\nВторой массив: ");
+	for (i = 0; i < 20; i++){
+		if (mass1[i] % 2 == 0){
+			mass2[i] = mass1[i];
+			printf("%d ", mass2[i]);
+		}
+	}
+	printf("\nПервый массив после удаления повторяющихся элементов: ");
+	for (i = 1; i < 20; i++){
+		for (k = i - 1; k >= 0; k--){
+			if (mass1[i] == mass1[k]){
+				mass1[i] = 0;
+				break;
+			}
+		}
+	}
+	for (i = 0; i < 20; i++) printf("%d ", mass1[i]);
+	while (1){}
+	return 0;
+}
+
+5. Из массива убрать все повторяющиеся элементы (осуществлять сдвиг влево)
+#include "stdafx.h"
+#include <stdio.h>
+#include <locale>
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_ALL, ".1251");
+	int i, k, l, m, n = 20, mass1[20];
+	printf("Введите массив из 20 элементов:\n");
+	for (i = 0; i < n; i++)	scanf_s("%d", &mass1[i]);
+	printf("\nПервый массив после удаления повторяющихся элементов (присваивание 0): ");
+	for (i = 1; i < n; i++){
+		m = i;
+		for (k = i - 1; k >= 0; k--){
+			if (mass1[i] == mass1[k]){
+				for (l=i + 1; l < n; l++){
+					mass1[i] = mass1[l];
+					i++;
+				}i = m - 1; n--;
+			}
+		} 
+	}
+	for (i = 0; i < n; i++) printf("%d ", mass1[i]);
+
+	while (1){}
+	return 0;
+}

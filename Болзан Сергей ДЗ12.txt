@@ -1,0 +1,100 @@
+﻿Сделать реализацию класса который хранит список элементов целого типа, хранение элементов проще реализовать через malloc.
+class CIntList {
+public:
+	int count(); 		// Возвращает количество элементов в списке
+	int add(int value);	// Добавить элемент
+	int delete(int index);	// Удалить элемент по индексу
+	void clear();		// Очистить список элементов
+	void sort();		// Отсортировать список
+	int search(int value);	// Найти индекс элемента по значению
+	int index(int index);	// Выбрать элемент по индексу
+
+
+
+
+#include "stdafx.h"
+#include <iostream>
+using namespace std;
+class CIntList {
+private:
+	int N = 10;
+	int *mass;
+public:
+	CIntList();
+	int count();
+	int add(int value);
+	int del(int index);
+	void clear();
+	void sort();
+	int search(int value);
+	int index(int index);
+	void print();
+};
+CIntList::CIntList() {
+	mass = (int*)malloc(N * sizeof (int));
+	for (int i = 0; i < N; i++) mass[i] = rand() % 100;
+}
+int CIntList::count(){
+	return N;
+}
+int CIntList::add(int value) {
+	mass = (int*)realloc(mass, (N + 1) * sizeof (int));
+	mass[N] = value;
+	N++;
+	return 0;
+}
+int CIntList::del(int index) {
+	for (int i = index; i < N; i++) mass[i - 1] = mass[i];
+	mass = (int*)realloc(mass, (N - 1) * sizeof (int));
+	N--;
+	return 0;
+}
+void CIntList::clear() {
+	free(mass);
+	N = 0;
+}
+void CIntList::sort() {
+	int size = N;
+	for (int i = 0; i < size - 1; i++) {
+		for (int j = 0; j < size - i - 1; j++) {
+			if (mass[j] > mass[j + 1]) {
+				int b = mass[j];
+				mass[j] = mass[j + 1];
+				mass[j + 1] = b;
+			}
+		}
+	}
+}
+int CIntList::search(int value) {
+	for (int i = 0; i < N; i++) 
+	if (mass[i] == value) cout << "Index = " << i + 1 << "\n";
+	return 0;
+}
+int CIntList::index(int index) {
+	return mass[index - 1];
+}
+void CIntList::print() {
+	for (int i = 0; i < N; i++) cout << mass[i] << " ";
+	cout << "\n";
+}
+int _tmain(int argc, _TCHAR* argv[])
+{
+	CIntList work;
+	work.print();
+	cout << "Kolichestvo elementov: " << work.count() << "\n";
+	work.add(55);
+	work.print();
+	cout << "Kolichestvo elementov: " << work.count() << "\n";
+	work.del(4);
+	work.print();
+	cout << "Kolichestvo elementov: " << work.count() << "\n";
+	work.sort();
+	work.print();
+	work.search(55);
+	cout << "Vibrannii element = " << work.index(8);
+	work.clear();
+	work.print();
+	system("pause");
+	return 0;
+}
+
